@@ -3,14 +3,14 @@
 class AbstractMelonOrder():
     """An abstract base class that other Melon Orders inherit from."""
 
-    def __init__(self, species, qty, country_code=None):
+    def __init__(self, tax, order_type, species, qty, country_code=None):
         """Initialize melon order attributes."""
 
         self.species = species
         self.qty = qty
         self.shipped = False
-        self.order_type = self.order_type
-        self.tax = self.tax # not sure why it can't be -> self.tax = tax
+        self.order_type = order_type
+        self.tax = tax # not sure why it can't be -> self.tax = tax
         if country_code:
             self.country_code = country_code
 
@@ -30,14 +30,17 @@ class AbstractMelonOrder():
 
 class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
-
     tax = 0.08
     order_type = 'domestic'
 
-    def __init__(self, tax, order_type):
-        super().__init__()
+    def __init__(self, species, qty):
+        super().__init__(self.tax, self.order_type, species, qty)
+
+        # self.tax = 0.08
+        # self.order_type = 'domestic'
        
     # def __init__(self, species, qty):
+
     #     """Initialize melon order attributes."""
 
     #     self.species = species
@@ -64,7 +67,10 @@ class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
 
     tax = 0.17
-    order_type = 'international'
+    order_type = "international"
+
+    def __init__(self, species, qty, country_code):
+        super().__init__(self.tax, self.order_type, species, qty, country_code)
 
     # def __init__(self, tax, order_type, country_code):
     # super().__init__(tax, order_type)
