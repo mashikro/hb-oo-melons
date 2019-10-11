@@ -9,7 +9,7 @@ class AbstractMelonOrder():
         self.species = species
         self.qty = qty
         self.shipped = False
-        self.order_type = "domestic"
+        self.order_type = self.order_type
         self.tax = self.tax # not sure why it can't be -> self.tax = tax
         if country_code:
             self.country_code = country_code
@@ -32,7 +32,11 @@ class DomesticMelonOrder(AbstractMelonOrder):
     """A melon order within the USA."""
 
     tax = 0.08
+    order_type = 'domestic'
 
+    def __init__(self, tax, order_type):
+        super().__init__()
+       
     # def __init__(self, species, qty):
     #     """Initialize melon order attributes."""
 
@@ -60,6 +64,10 @@ class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
 
     tax = 0.17
+    order_type = 'international'
+
+    # def __init__(self, tax, order_type, country_code):
+    # super().__init__(tax, order_type)
 
     # def __init__(self, species, qty, country_code):
     #     """Initialize melon order attributes."""
